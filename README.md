@@ -6,6 +6,8 @@
 ![Swift](https://img.shields.io/badge/Swift-5.0-orange?logo=swift)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
+**[日本語で読む](README.ja.md)**
+
 ---
 
 ## Who is this for?

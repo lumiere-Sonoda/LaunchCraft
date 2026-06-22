@@ -15,6 +15,7 @@ struct JobEditorView: View {
     /// 選択行が変わるたびに `.id()` で作り直され、@State が初期化される。
     @State private var job: ShellJob
     @State private var showDeleteConfirm = false
+    @State private var showLogViewer = false
 
     let onClose: () -> Void
 
@@ -51,6 +52,23 @@ struct JobEditorView: View {
             Button("キャンセル", role: .cancel) {}
         } message: {
             Text("launchd の登録を解除し、設定とログを削除します。")
+        }
+        .sheet(isPresented: $showLogViewer) {
+            VStack(spacing: 0) {
+                HStack {
+                    Text("ログ: \(job.name)")
+                        .font(.headline)
+                    Spacer()
+                    Button("閉じる") { showLogViewer = false }
+                        .buttonStyle(.borderless)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(.bar)
+                Divider()
+                LogViewerView(job: job)
+            }
+            .frame(minWidth: 720, minHeight: 480)
         }
     }
 
@@ -259,7 +277,7 @@ struct JobEditorView: View {
             .help("登録済みジョブを launchd 経由で即実行し、ログを表示します")
 
             Button {
-                console.loadLogs(for: job)
+                showLogViewer = true
             } label: {
                 Label("ログを見る", systemImage: "doc.text")
             }

@@ -166,6 +166,16 @@ struct JobRow: View {
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)
+                if job.enabled, let label = NextRunCalculator.nextRunLabel(for: job) {
+                    HStack(spacing: 5) {
+                        Image(systemName: "arrow.clockwise.circle")
+                            .imageScale(.small)
+                        Text("次回: \(label)")
+                            .lineLimit(1)
+                    }
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                }
             }
             Spacer(minLength: 4)
             if !job.enabled {

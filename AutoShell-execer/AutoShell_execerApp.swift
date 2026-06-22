@@ -2,31 +2,30 @@
 //  AutoShell_execerApp.swift
 //  AutoShell-execer
 //
-//  Created by aritosonoda on 2026/06/21.
+//  launchd を使って シェルスクリプトを定期実行する、cron の管理版アプリ。
 //
 
 import SwiftUI
-import SwiftData
 
 @main
 struct AutoShell_execerApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    @State private var store = JobStore()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(store)
+                .frame(minWidth: 920, minHeight: 600)
         }
-        .modelContainer(sharedModelContainer)
+        .windowResizability(.contentMinSize)
+        .commands {
+            CommandGroup(after: .newItem) {
+                Button("ジョブを再読み込み") {
+                    store.load()
+                    Task { await store.refreshAllStates() }
+                }
+                .keyboardShortcut("r", modifiers: [.command, .shift])
+            }
+        }
     }
 }

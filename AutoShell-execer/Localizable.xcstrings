@@ -1,0 +1,1049 @@
+{
+  "sourceLanguage" : "ja",
+  "strings" : {
+    "/bin/zsh" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "/bin/zsh" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "/bin/zsh" } }
+      }
+    },
+    "KEY" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "KEY" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "KEY" } }
+      }
+    },
+    "ジョブ (%lld)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Jobs (%lld)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ジョブ (%lld)" } }
+      }
+    },
+    "ジョブを追加" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Job" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ジョブを追加" } }
+      }
+    },
+    "ジョブを再読み込み" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reload Jobs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ジョブを再読み込み" } }
+      }
+    },
+    "追加" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "追加" } }
+      }
+    },
+    "新しいジョブを追加" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add a new job" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "新しいジョブを追加" } }
+      }
+    },
+    "更新" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Refresh" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "更新" } }
+      }
+    },
+    "状態を更新" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Refresh status" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "状態を更新" } }
+      }
+    },
+    "コンソール" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Console" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コンソール" } }
+      }
+    },
+    "コンソールの表示切り替え" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Toggle console" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コンソールの表示切り替え" } }
+      }
+    },
+    "コンソールを閉じる" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close console" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "コンソールを閉じる" } }
+      }
+    },
+    "ジョブが選択されていません" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No job selected" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ジョブが選択されていません" } }
+      }
+    },
+    "左の ＋ から新しいスケジュール実行を作成できます。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Create a new scheduled task from the ＋ on the left." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "左の ＋ から新しいスケジュール実行を作成できます。" } }
+      }
+    },
+    "無効" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Off" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無効" } }
+      }
+    },
+    "無効にする" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disable" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無効にする" } }
+      }
+    },
+    "有効にする" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "有効にする" } }
+      }
+    },
+    "削除" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除" } }
+      }
+    },
+    "キャンセル" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "キャンセル" } }
+      }
+    },
+    "（無名のジョブ）" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "(Untitled Job)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "（無名のジョブ）" } }
+      }
+    },
+    "このジョブを削除しますか？" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete this job?" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "このジョブを削除しますか？" } }
+      }
+    },
+    "launchd の登録を解除し、設定とログを削除します。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This unregisters it from launchd and deletes its settings and logs." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "launchd の登録を解除し、設定とログを削除します。" } }
+      }
+    },
+    "名前" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Name" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "名前" } }
+      }
+    },
+    "ジョブ名" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Job name" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ジョブ名" } }
+      }
+    },
+    "このジョブを有効にする" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable this job" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "このジョブを有効にする" } }
+      }
+    },
+    "ラベル" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Label" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ラベル" } }
+      }
+    },
+    "基本" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Basics" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "基本" } }
+      }
+    },
+    "方法" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "方法" } }
+      }
+    },
+    "シェルスクリプト / コード" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shell script / code" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "シェルスクリプト / コード" } }
+      }
+    },
+    "ファイル" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "File" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ファイル" } }
+      }
+    },
+    "スクリプトファイルのパス" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Path to script file" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スクリプトファイルのパス" } }
+      }
+    },
+    "選択…" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose…" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "選択…" } }
+      }
+    },
+    "引数" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Arguments" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "引数" } }
+      }
+    },
+    "スペース区切り（任意）" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Space-separated (optional)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スペース区切り（任意）" } }
+      }
+    },
+    "インタプリタ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Interpreter" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "インタプリタ" } }
+      }
+    },
+    "（ファイルを直接実行）" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "(Run file directly)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "（ファイルを直接実行）" } }
+      }
+    },
+    "実行するスクリプト" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Script to run" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "実行するスクリプト" } }
+      }
+    },
+    "スケジュール" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Schedule" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スケジュール" } }
+      }
+    },
+    "作業フォルダ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Working folder" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "作業フォルダ" } }
+      }
+    },
+    "（任意）" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "(Optional)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "（任意）" } }
+      }
+    },
+    "値" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Value" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "値" } }
+      }
+    },
+    "環境変数を追加" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add variable" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "環境変数を追加" } }
+      }
+    },
+    "PATH は自動で補われます。追加したい変数があればここで指定します。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "PATH is added automatically. Add any extra variables here." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "PATH は自動で補われます。追加したい変数があればここで指定します。" } }
+      }
+    },
+    "作業ディレクトリ・環境変数" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Working directory & environment" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "作業ディレクトリ・環境変数" } }
+      }
+    },
+    "ログイン時にも一度実行する (RunAtLoad)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Also run once at login (RunAtLoad)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ログイン時にも一度実行する (RunAtLoad)" } }
+      }
+    },
+    "常駐させ、終了したら自動再起動する (KeepAlive)" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Keep resident and auto-restart on exit (KeepAlive)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "常駐させ、終了したら自動再起動する (KeepAlive)" } }
+      }
+    },
+    "KeepAlive はスケジュールよりも「動き続ける」挙動が優先されます。常駐プロセス向けです。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "KeepAlive prioritizes staying alive over the schedule. Intended for resident processes." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "KeepAlive はスケジュールよりも「動き続ける」挙動が優先されます。常駐プロセス向けです。" } }
+      }
+    },
+    "オプション" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Options" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "オプション" } }
+      }
+    },
+    "生成される launchd plist を確認" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Preview generated launchd plist" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "生成される launchd plist を確認" } }
+      }
+    },
+    "テスト実行" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Test run" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "テスト実行" } }
+      }
+    },
+    "保存せずに今のスクリプトをそのまま実行し、下のコンソールに出力します" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Run the current script without saving and show output in the console below" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存せずに今のスクリプトをそのまま実行し、下のコンソールに出力します" } }
+      }
+    },
+    "今すぐ実行" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Run now" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "今すぐ実行" } }
+      }
+    },
+    "登録済みジョブを launchd 経由で即実行し、ログを表示します" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Run the registered job immediately via launchd and show its logs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "登録済みジョブを launchd 経由で即実行し、ログを表示します" } }
+      }
+    },
+    "ログを見る" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "View logs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ログを見る" } }
+      }
+    },
+    "保存して登録" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save & register" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存して登録" } }
+      }
+    },
+    "入力モード" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Input mode" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "入力モード" } }
+      }
+    },
+    "種類" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Type" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "種類" } }
+      }
+    },
+    "実行間隔" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Interval" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "実行間隔" } }
+      }
+    },
+    "ごとに実行" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "between runs" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ごとに実行" } }
+      }
+    },
+    "間隔モードはアプリ読み込み時点からの相対時間で動きます（壁時計の :00 等には揃いません）。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Interval mode is relative to when the agent loads (not aligned to wall-clock :00, etc.)." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "間隔モードはアプリ読み込み時点からの相対時間で動きます（壁時計の :00 等には揃いません）。" } }
+      }
+    },
+    "頻度" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Frequency" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "頻度" } }
+      }
+    },
+    "毎時" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hourly" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎時" } }
+      }
+    },
+    "分に実行" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分に実行" } }
+      }
+    },
+    "毎日" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Daily" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎日" } }
+      }
+    },
+    "時刻" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Time" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "時刻" } }
+      }
+    },
+    "毎週" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekly" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎週" } }
+      }
+    },
+    "毎月" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monthly" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎月" } }
+      }
+    },
+    "よく使う設定" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Common presets" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "よく使う設定" } }
+      }
+    },
+    "毎分" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Every minute" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎分" } }
+      }
+    },
+    "5分ごと" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Every 5 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "5分ごと" } }
+      }
+    },
+    "15分ごと" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Every 15 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "15分ごと" } }
+      }
+    },
+    "30分ごと" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Every 30 min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "30分ごと" } }
+      }
+    },
+    "毎時0分" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hourly at :00" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎時0分" } }
+      }
+    },
+    "毎日 9:00" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Daily 9:00" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎日 9:00" } }
+      }
+    },
+    "平日 9:00" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekdays 9:00" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "平日 9:00" } }
+      }
+    },
+    "毎週月曜 9:00" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mondays 9:00" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎週月曜 9:00" } }
+      }
+    },
+    "毎月1日 9:00" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Monthly 1st 9:00" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎月1日 9:00" } }
+      }
+    },
+    "L=末日は非対応" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "L (last day) unsupported" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "L=末日は非対応" } }
+      }
+    },
+    "cron 式:" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "cron:" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "cron 式:" } }
+      }
+    },
+    "「日」と「曜日」を同時に指定すると launchd では両方一致が条件になります（cron の OR とは異なります）。片方は * を推奨。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Specifying both Day and Weekday makes launchd require BOTH to match (unlike cron’s OR). Use * for one of them." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "「日」と「曜日」を同時に指定すると launchd では両方一致が条件になります（cron の OR とは異なります）。片方は * を推奨。" } }
+      }
+    },
+    "停止" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "停止" } }
+      }
+    },
+    "保存" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存" } }
+      }
+    },
+    "クリア" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "クリア" } }
+      }
+    },
+    "インラインスクリプト" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Inline script" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "インラインスクリプト" } }
+      }
+    },
+    "ファイルを指定" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose a file" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ファイルを指定" } }
+      }
+    },
+    "launchd（かんたん）" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "launchd (simple)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "launchd（かんたん）" } }
+      }
+    },
+    "cron 式" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "cron" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "cron 式" } }
+      }
+    },
+    "一定間隔ごと" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fixed interval" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "一定間隔ごと" } }
+      }
+    },
+    "決まった時刻に" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "At set times" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "決まった時刻に" } }
+      }
+    },
+    "新しいジョブ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "New Job" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "新しいジョブ" } }
+      }
+    },
+    "ログはまだありません。" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No logs yet." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ログはまだありません。" } }
+      }
+    },
+    "―― 標準出力 (stdout) ――" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "—— stdout ——" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "―― 標準出力 (stdout) ――" } }
+      }
+    },
+    "―― 標準エラー (stderr) ――" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "—— stderr ——" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "―― 標準エラー (stderr) ――" } }
+      }
+    },
+    "読み込みました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Loaded" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "読み込みました" } }
+      }
+    },
+    "取り外しました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unloaded" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "取り外しました" } }
+      }
+    },
+    "有効化しました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enabled" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "有効化しました" } }
+      }
+    },
+    "無効化しました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disabled" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "無効化しました" } }
+      }
+    },
+    "実行を開始しました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Started" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "実行を開始しました" } }
+      }
+    },
+    "削除しました" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Deleted" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "削除しました" } }
+      }
+    },
+    "フィールドが空です" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Field is empty" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "フィールドが空です" } }
+      }
+    },
+    "cron は5つのフィールドが必要です（分 時 日 月 曜日）。例: */5 * * * *" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "cron needs 5 fields (min hour day month weekday). e.g. */5 * * * *" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "cron は5つのフィールドが必要です（分 時 日 月 曜日）。例: */5 * * * *" } }
+      }
+    },
+    "weekday.short.sun" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sun" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日" } }
+      }
+    },
+    "weekday.short.mon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mon" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "月" } }
+      }
+    },
+    "weekday.short.tue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tue" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "火" } }
+      }
+    },
+    "weekday.short.wed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wed" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "水" } }
+      }
+    },
+    "weekday.short.thu" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Thu" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "木" } }
+      }
+    },
+    "weekday.short.fri" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fri" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "金" } }
+      }
+    },
+    "weekday.short.sat" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sat" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "土" } }
+      }
+    },
+    "unit.seconds" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "sec" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "秒" } }
+      }
+    },
+    "unit.minutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分" } }
+      }
+    },
+    "unit.hours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "hr" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "時間" } }
+      }
+    },
+    "unit.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "day" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日" } }
+      }
+    },
+    "schedule.monthly.daySuffix" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日" } }
+      }
+    },
+    "schedule.summary.cron" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "cron: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "cron: %@" } }
+      }
+    },
+    "schedule.summary.interval.seconds" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "every %lld sec" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld秒ごと" } }
+      }
+    },
+    "schedule.summary.interval.minutes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "every %lld min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld分ごと" } }
+      }
+    },
+    "schedule.summary.interval.hours" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "every %lld hr" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld時間ごと" } }
+      }
+    },
+    "schedule.summary.interval.days" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "every %lld days" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "%lld日ごと" } }
+      }
+    },
+    "schedule.summary.hourly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "hourly at minute %lld" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎時 %lld 分" } }
+      }
+    },
+    "schedule.summary.daily" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "daily at %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎日 %@" } }
+      }
+    },
+    "schedule.summary.weekly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ at %2$@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎週 %1$@ %2$@" } }
+      }
+    },
+    "schedule.summary.monthly" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "monthly: day %1$lld at %2$@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "毎月 %1$lld 日 %2$@" } }
+      }
+    },
+    "msg.saveFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Save failed: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "保存に失敗: %@" } }
+      }
+    },
+    "msg.deleted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Deleted “%@”" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "「%@」を削除しました" } }
+      }
+    },
+    "console.title.test" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Test run: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "テスト実行: %@" } }
+      }
+    },
+    "console.title.logs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Logs: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ログ: %@" } }
+      }
+    },
+    "console.tmpScriptFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to create temp script: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "一時スクリプトの作成に失敗: %@" } }
+      }
+    },
+    "console.scriptNotFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Script file not found: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "スクリプトファイルが見つかりません: %@" } }
+      }
+    },
+    "console.exitCode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "— exit code %lld —" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "― 終了コード %lld ―" } }
+      }
+    },
+    "status.stopped" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stopped" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "停止" } }
+      }
+    },
+    "status.running" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Running" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "実行中" } }
+      }
+    },
+    "status.idle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Idle" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "待機中" } }
+      }
+    },
+    "plistWriteFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to write plist: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "plist の書き出しに失敗: %@" } }
+      }
+    },
+    "exitCode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "exit code %lld" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "終了コード %lld" } }
+      }
+    },
+    "launchFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to launch: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "起動に失敗: %@" } }
+      }
+    },
+    "cron.err.unparsable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cannot interpret value: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "値が解釈できません: %@" } }
+      }
+    },
+    "cron.err.step" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Invalid step value: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "ステップ値が不正です: %@" } }
+      }
+    },
+    "cron.err.range" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Invalid range: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "範囲が不正です: %@" } }
+      }
+    },
+    "cron.err.number" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Invalid number: %@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "数値が不正です: %@" } }
+      }
+    },
+    "cron.err.outOfRange" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Value out of range (%1$lld–%2$lld): %3$@" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "値が範囲外です(%1$lld〜%2$lld): %3$@" } }
+      }
+    },
+    "cron.err.tooMany" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This cron expands to %1$lld run times — too many (limit %2$lld). Use interval (launchd) mode or a narrower expression." } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "この cron 式は %1$lld 個の実行時刻に展開され、多すぎます（上限 %2$lld）。間隔(launchd)モードか、もっと絞った式をお使いください。" } }
+      }
+    },
+    "cron.field.minute" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Min" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "分" } }
+      }
+    },
+    "cron.field.hour" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hour" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "時" } }
+      }
+    },
+    "cron.field.day" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Day" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "日" } }
+      }
+    },
+    "cron.field.month" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Month" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "月" } }
+      }
+    },
+    "cron.field.weekday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Weekday" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "曜日" } }
+      }
+    },
+    "cron.hint.weekday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "0-7 (0,7=Sun)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "0-7 (0,7=日)" } }
+      }
+    },
+    "cron.preview.interval" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "→ converted to StartInterval (every %lld sec)" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "→ %lld 秒ごと (StartInterval) に変換" } }
+      }
+    },
+    "cron.preview.calendar" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "→ converted to %lld StartCalendarInterval entries" } },
+        "ja" : { "stringUnit" : { "state" : "translated", "value" : "→ %lld 個の実行時刻 (StartCalendarInterval) に変換" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

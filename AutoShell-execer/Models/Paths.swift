@@ -11,7 +11,7 @@ enum Paths {
     /// 例: ~/Library/Application Support/AutoShell-execer
     static var appSupport: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        return base.appendingPathComponent("AutoShell-execer", isDirectory: true)
+        return base.appendingPathComponent("LaunchCraft", isDirectory: true)
     }
 
     /// ジョブのメタデータ(JSON)を保存する場所（このアプリの真実の源）

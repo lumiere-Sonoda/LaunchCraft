@@ -56,7 +56,7 @@ struct ContentView: View {
                 Text("ジョブ (\(store.jobs.count))")
             }
         }
-        .navigationTitle(Text(verbatim: "AutoShell"))
+        .navigationTitle(Text(verbatim: "LaunchCraft"))
         .navigationSplitViewColumnWidth(min: 250, ideal: 290)
         .safeAreaInset(edge: .bottom) {
             Button {

@@ -164,7 +164,7 @@ struct ShellJob: Identifiable, Codable, Hashable {
     // MARK: 派生プロパティ
 
     /// launchd のラベル（ジョブの一意な識別子）
-    var label: String { "com.autoshell.\(id.uuidString.lowercased())" }
+    var label: String { "com.launchcraft.\(id.uuidString.lowercased())" }
 
     /// LaunchAgents 内の plist パス
     var plistURL: URL {

@@ -1,4 +1,4 @@
-# AutoShell
+# LaunchCraft
 
 > macOS の launchd を GUI で操作する SwiftUI アプリ。  
 > cron や plist を手で書かずに、シェルスクリプトの定期実行を設定できます。
@@ -22,14 +22,14 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  AutoShell                          + ↺ ⌨  …           │
+│  LaunchCraft                        + ↺ ⌨  …           │
 ├──────────────────┬──────────────────────────────────────┤
 │  ジョブ (3)      │  Git pull                            │
 │                  │                                      │
 │  ● Git pull      │  基本                                │
 │    毎日 09:00    │    名前 ─────────────────────────    │
 │    次回: 09:00   │    有効にする  ✓                     │
-│                  │    ラベル  com.autoshell.xxxxxx       │
+│                  │    ラベル  com.launchcraft.xxxxxx     │
 │  ● ログ整理      │    最終実行  06/22 09:00  ✓ 成功     │
 │    30分ごと      │                                      │
 │    次回: あと    │  スクリプト                          │
@@ -45,7 +45,7 @@
 │                  │  [ ログを見る ] [  保存して登録 ▶ ]  │
 ├──────────────────┴──────────────────────────────────────┤
 │ ⌨  テスト実行: Git pull                                 │
-│  $ /bin/zsh /tmp/autoshell-test-xxxx.sh                 │
+│  $ /bin/zsh /tmp/launchcraft-test-xxxx.sh               │
 │  Already up to date.                                    │
 │  ― 終了コード 0 ―                                       │
 └─────────────────────────────────────────────────────────┘
@@ -105,13 +105,13 @@
 既存の LaunchAgent には一切触れません。
 
 ```
-~/Library/Application Support/AutoShell/
+~/Library/Application Support/LaunchCraft/
 ├── jobs/     ← ジョブ設定 JSON（アプリの真実の源）
 ├── scripts/  ← インラインスクリプトの .sh
 └── logs/     ← stdout / stderr ログ
 
 ~/Library/LaunchAgents/
-└── com.autoshell.<uuid>.plist  ← JSON から生成した launchd 定義
+└── com.launchcraft.<uuid>.plist  ← JSON から生成した launchd 定義
 ```
 
 | 操作 | launchctl コマンド |
@@ -126,8 +126,8 @@
 ## ビルドと実行
 
 ```sh
-git clone https://github.com/YOUR_NAME/AutoShell.git
-open AutoShell/AutoShell-execer.xcodeproj
+git clone https://github.com/YOUR_NAME/LaunchCraft.git
+open LaunchCraft/AutoShell-execer.xcodeproj
 # Xcode で ⌘R
 ```
 
@@ -147,13 +147,13 @@ xcrun notarytool store-credentials "AC_NOTARY" \
 
 # 2) アーカイブ → export → zip
 xcodebuild -project AutoShell-execer.xcodeproj -scheme AutoShell-execer \
-  -configuration Release -archivePath build/AutoShell.xcarchive archive
-xcodebuild -exportArchive -archivePath build/AutoShell.xcarchive \
+  -configuration Release -archivePath build/LaunchCraft.xcarchive archive
+xcodebuild -exportArchive -archivePath build/LaunchCraft.xcarchive \
   -exportPath build/export -exportOptionsPlist ExportOptions.plist
-ditto -c -k --keepParent "build/export/AutoShell-execer.app" "build/AutoShell.zip"
+ditto -c -k --keepParent "build/export/AutoShell-execer.app" "build/LaunchCraft.zip"
 
 # 3) 公証申請 → staple
-xcrun notarytool submit "build/AutoShell.zip" --keychain-profile "AC_NOTARY" --wait
+xcrun notarytool submit "build/LaunchCraft.zip" --keychain-profile "AC_NOTARY" --wait
 xcrun stapler staple "build/export/AutoShell-execer.app"
 ```
 

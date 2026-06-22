@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import AppKit
+import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Environment(JobStore.self) private var store
@@ -85,6 +87,23 @@ struct ContentView: View {
                 }
                 .help("コンソールの表示切り替え")
             }
+            ToolbarItem {
+                Menu {
+                    Button {
+                        exportJobs()
+                    } label: {
+                        Label("書き出す…", systemImage: "square.and.arrow.up")
+                    }
+                    Button {
+                        importJobs()
+                    } label: {
+                        Label("読み込む…", systemImage: "square.and.arrow.down")
+                    }
+                } label: {
+                    Label("その他", systemImage: "ellipsis.circle")
+                }
+                .help("ジョブの書き出し・読み込み")
+            }
         }
     }
 
@@ -139,6 +158,29 @@ struct ContentView: View {
     private func addJob() {
         let job = store.addDraft()
         selection = job.id
+    }
+
+    private func exportJobs() {
+        guard let data = try? store.bundleData() else { return }
+        let panel = NSSavePanel()
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyyMMdd"
+        panel.nameFieldStringValue = "AutoShell-\(fmt.string(from: Date())).json"
+        panel.allowedContentTypes = [UTType.json]
+        panel.canCreateDirectories = true
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        try? data.write(to: url, options: .atomic)
+    }
+
+    private func importJobs() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [UTType.json]
+        panel.allowsMultipleSelection = false
+        panel.message = String(localized: "AutoShell のジョブファイル (.json) を選択してください")
+        guard panel.runModal() == .OK,
+              let url = panel.url,
+              let data = try? Data(contentsOf: url) else { return }
+        Task { await store.importBundle(from: data) }
     }
 }
 

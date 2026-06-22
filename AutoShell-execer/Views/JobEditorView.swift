@@ -45,6 +45,9 @@ struct JobEditorView: View {
             actionBar
         }
         .navigationTitle(job.name.isEmpty ? String(localized: "（無名のジョブ）") : job.name)
+        .task(id: job.id) {
+            await store.refreshRunInfo(for: job)
+        }
         .alert("このジョブを削除しますか？", isPresented: $showDeleteConfirm) {
             Button("削除", role: .destructive) {
                 Task { await store.delete(job); onClose() }
@@ -83,6 +86,9 @@ struct JobEditorView: View {
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.secondary)
                     .textSelection(.enabled)
+            }
+            LabeledContent("最終実行") {
+                lastRunView
             }
         } header: {
             sectionHeader("基本", systemImage: "info.circle")
@@ -304,6 +310,34 @@ struct JobEditorView: View {
     }
 
     // MARK: ヘルパー
+
+    @ViewBuilder
+    private var lastRunView: some View {
+        if let info = store.runInfo(for: job) {
+            HStack(spacing: 10) {
+                if let date = info.lastRunAt {
+                    Text(DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .medium))
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text("未実行")
+                        .foregroundStyle(.tertiary)
+                }
+                if let code = info.lastExitCode {
+                    Label(
+                        code == 0
+                            ? String(localized: "exitCode.success", defaultValue: "成功")
+                            : String(localized: "exitCode.failure", defaultValue: "コード \(code)"),
+                        systemImage: code == 0 ? "checkmark.circle.fill" : "xmark.circle.fill"
+                    )
+                    .foregroundStyle(code == 0 ? Color.green : Color.orange)
+                    .font(.caption)
+                }
+            }
+        } else {
+            Text("—")
+                .foregroundStyle(.tertiary)
+        }
+    }
 
     private func sectionHeader(_ title: LocalizedStringKey, systemImage: String) -> some View {
         Label(title, systemImage: systemImage)

@@ -14,6 +14,7 @@ import Observation
 final class JobStore {
     var jobs: [ShellJob] = []
     var states: [UUID: JobRuntimeState] = [:]
+    var runInfos: [UUID: JobRunInfo] = [:]
     var lastMessage: String = ""
     var lastMessageIsError: Bool = false
 
@@ -95,6 +96,7 @@ final class JobStore {
         let outcome = await LaunchctlService.sync(job: updated)
         report(outcome.detail, isError: !outcome.success)
         await refreshState(for: updated)
+        await refreshRunInfo(for: updated)
     }
 
     /// 有効/無効を切り替えて反映する。
@@ -118,6 +120,9 @@ final class JobStore {
         let outcome = await LaunchctlService.kickstart(label: job.label, restart: true)
         report(outcome.detail, isError: !outcome.success)
         await refreshState(for: job)
+        // 少し待ってからログ更新日時を取得（launchd がファイルを書き終わるのを待つ）
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        await refreshRunInfo(for: job)
         return outcome
     }
 
@@ -151,6 +156,52 @@ final class JobStore {
 
     func state(for job: ShellJob) -> JobRuntimeState {
         states[job.id] ?? .unknown
+    }
+
+    // MARK: 実行履歴
+
+    func refreshRunInfo(for job: ShellJob) async {
+        runInfos[job.id] = await LaunchctlService.runInfo(for: job)
+    }
+
+    func runInfo(for job: ShellJob) -> JobRunInfo? {
+        runInfos[job.id]
+    }
+
+    // MARK: Import / Export
+
+    /// 全ジョブを JSON バンドルとしてエンコードする。
+    func bundleData() throws -> Data {
+        let bundle = JobBundle(jobs: jobs)
+        return try encoder.encode(bundle)
+    }
+
+    /// JSON バンドルを読み込み、ジョブを追加・launchd へ登録する。
+    func importBundle(from data: Data) async {
+        guard let bundle = try? decoder.decode(JobBundle.self, from: data) else {
+            report(String(localized: "import.failed", defaultValue: "読み込みに失敗しました（形式が不正です）"), isError: true)
+            return
+        }
+        var imported = 0
+        for var job in bundle.jobs {
+            // UUID を振り直してコリジョンを防ぐ
+            job.id = UUID()
+            job.createdAt = Date()
+            job.lastModified = Date()
+            do {
+                try persist(job)
+                jobs.append(job)
+                _ = await LaunchctlService.sync(job: job)
+                imported += 1
+            } catch {
+                jobs.removeAll { $0.id == job.id }
+            }
+        }
+        if imported > 0 {
+            report(String(localized: "import.success", defaultValue: "\(imported) 件のジョブを読み込みました"), isError: false)
+        } else {
+            report(String(localized: "import.failed", defaultValue: "読み込みに失敗しました（形式が不正です）"), isError: true)
+        }
     }
 
     // MARK: メッセージ

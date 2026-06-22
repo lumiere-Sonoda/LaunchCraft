@@ -13,6 +13,12 @@ struct LaunchctlOutcome: Sendable {
     let detail: String
 }
 
+/// ジョブの実行履歴（launchctl print + ログファイル更新日時から取得）
+struct JobRunInfo: Sendable {
+    let lastExitCode: Int?
+    let lastRunAt: Date?
+}
+
 /// launchd 上のジョブの状態
 enum JobRuntimeState: Sendable, Equatable {
     case notLoaded            // bootstrap されていない
@@ -81,6 +87,37 @@ enum LaunchctlService {
         args.append(serviceTarget(label))
         let r = await ShellRunner.runCapture(executable: launchctl, arguments: args)
         return outcome(r, okMessage: String(localized: "実行を開始しました"))
+    }
+
+    /// ジョブの実行履歴を取得する。
+    /// - lastExitCode: launchctl print の "last exit code" フィールド
+    /// - lastRunAt: stdout ログファイルの更新日時（ジョブが実行されると launchd が書き込む）
+    nonisolated static func runInfo(for job: ShellJob) async -> JobRunInfo {
+        let r = await ShellRunner.runCapture(
+            executable: launchctl, arguments: ["print", serviceTarget(job.label)]
+        )
+
+        var exitCode: Int? = nil
+        if r.status == 0 {
+            // macOS バージョンにより "last exit code" / "exit status" どちらかが出る
+            for pattern in [#"last exit code = (-?\d+)"#, #"exit status = (-?\d+)"#] {
+                if let range = r.stdout.range(of: pattern, options: .regularExpression),
+                   let eqRange = r.stdout[range].range(of: "= ") {
+                    exitCode = Int(String(r.stdout[range][eqRange.upperBound...]))
+                    break
+                }
+            }
+        }
+
+        var lastRunAt: Date? = nil
+        let logPath = job.stdoutLogURL.path
+        if let attrs = try? FileManager.default.attributesOfItem(atPath: logPath),
+           let size = attrs[.size] as? Int64, size > 0,
+           let modDate = attrs[.modificationDate] as? Date {
+            lastRunAt = modDate
+        }
+
+        return JobRunInfo(lastExitCode: exitCode, lastRunAt: lastRunAt)
     }
 
     /// 現在の状態を取得する（launchctl print）。

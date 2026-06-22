@@ -3,7 +3,9 @@
 //  LaunchCraft
 //
 //  メニューバー常駐パネル。
-//  TimelineView(.periodic) で毎 30 秒「次回実行まで」ラベルを自動更新する。
+//  - store.jobs / store.states は body の先頭で参照し、@Observable の観測トラッキングを確実に登録する。
+//  - TimelineView で 30 秒ごとに「次回実行まで」ラベルを再描画する。
+//  - ウィンドウを開く際は NSApp で既存ウィンドウを探し、無ければ openWindow で新規作成する。
 //
 
 import SwiftUI
@@ -16,11 +18,15 @@ struct MenuBarMenuView: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
+        // body の先頭で参照することで @Observable の変更通知を確実に受け取る
+        let jobs   = store.jobs
+        let states = store.states
+
         VStack(alignment: .leading, spacing: 0) {
             menuHeader
             Divider()
             TimelineView(.periodic(from: .now, by: 30)) { _ in
-                jobList
+                jobListView(jobs: jobs, states: states)
             }
             Divider()
             menuFooter
@@ -48,8 +54,8 @@ struct MenuBarMenuView: View {
     // MARK: ジョブ一覧
 
     @ViewBuilder
-    private var jobList: some View {
-        if store.jobs.isEmpty {
+    private func jobListView(jobs: [ShellJob], states: [UUID: JobRuntimeState]) -> some View {
+        if jobs.isEmpty {
             Text("ジョブがありません")
                 .font(.callout)
                 .foregroundStyle(.secondary)
@@ -58,11 +64,11 @@ struct MenuBarMenuView: View {
         } else {
             ScrollView {
                 VStack(spacing: 0) {
-                    ForEach(Array(store.jobs.enumerated()), id: \.element.id) { index, job in
+                    ForEach(Array(jobs.enumerated()), id: \.element.id) { index, job in
                         if index > 0 {
                             Divider().padding(.leading, 32)
                         }
-                        MenuBarJobRow(job: job, state: store.state(for: job))
+                        MenuBarJobRow(job: job, state: states[job.id] ?? .unknown)
                     }
                 }
             }
@@ -110,8 +116,17 @@ struct MenuBarMenuView: View {
     // MARK: ウィンドウを開く
 
     private func openMainWindow() {
-        openWindow(id: "main")
         NSApp.activate(ignoringOtherApps: true)
+        // WindowGroup の openWindow(id:) は毎回新規ウィンドウを作るため、
+        // 既存タイトルバー付きウィンドウを直接探して前面に出す。
+        if let w = NSApp.windows.first(where: {
+            !($0 is NSPanel) && $0.styleMask.contains(.titled)
+        }) {
+            w.makeKeyAndOrderFront(nil)
+        } else {
+            // ウィンドウが閉じられていた場合のみ新規作成
+            openWindow(id: "main")
+        }
     }
 }
 

@@ -13,6 +13,7 @@ struct ContentView: View {
     @Environment(JobStore.self) private var store
     @State private var console = TerminalConsole()
     @State private var selection: ShellJob.ID?
+    @State private var windowWidth: CGFloat = 1200
 
     var body: some View {
         VStack(spacing: 0) {
@@ -33,6 +34,11 @@ struct ContentView: View {
         .animation(.easeInOut(duration: 0.22), value: console.isVisible)
         .task { await store.refreshAllStates() }
         .overlay(alignment: .bottom) { messageBar }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            proxy.size.width
+        } action: { width in
+            windowWidth = width
+        }
     }
 
     // MARK: サイドバー
@@ -57,7 +63,7 @@ struct ContentView: View {
             }
         }
         .navigationTitle(Text(verbatim: "LaunchCraft"))
-        .navigationSplitViewColumnWidth(min: 250, ideal: 290)
+        .navigationSplitViewColumnWidth(min: 250, ideal: 290, max: windowWidth * 2 / 3)
         .safeAreaInset(edge: .bottom) {
             Button {
                 addJob()

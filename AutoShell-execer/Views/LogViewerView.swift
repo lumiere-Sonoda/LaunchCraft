@@ -1,6 +1,6 @@
 //
 //  LogViewerView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  stdout / stderr ログファイルをタブ切り替えで表示する専用ビューア。
 //  行番号・ファイルサイズ表示、自動更新（2秒ポーリング）、ログ消去に対応。

@@ -1,6 +1,6 @@
 //
 //  JobStore.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  ジョブ一覧の管理。JSON の読み書きと launchd への反映を仲介する。
 //

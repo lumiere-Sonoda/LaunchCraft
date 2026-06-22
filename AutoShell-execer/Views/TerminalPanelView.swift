@@ -1,6 +1,6 @@
 //
 //  TerminalPanelView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  画面下部にせり出すターミナル風ログパネル。
 //
@@ -89,7 +89,7 @@ struct TerminalPanelView: View {
 
     private func saveLog() {
         let panel = NSSavePanel()
-        panel.nameFieldStringValue = "autoshell-log.txt"
+        panel.nameFieldStringValue = "launchcraft-log.txt"
         panel.canCreateDirectories = true
         if panel.runModal() == .OK, let url = panel.url {
             try? console.plainText.write(to: url, atomically: true, encoding: .utf8)

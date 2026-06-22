@@ -1,6 +1,6 @@
 //
 //  NextRunCalculator.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  ShellJob のスケジュール設定から「次回実行予定時刻」を算出する。
 //

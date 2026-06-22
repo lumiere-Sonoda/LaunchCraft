@@ -1,6 +1,6 @@
 //
 //  TerminalConsole.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  画面下部のターミナル風ログパネルの状態。
 //  テスト実行のライブ出力と、保存済みログファイルの読み込みを扱う。
@@ -102,7 +102,7 @@ final class TerminalConsole {
         case .inline:
             // インラインコードを一時ファイルへ書き出して実行
             let tmp = FileManager.default.temporaryDirectory
-                .appendingPathComponent("autoshell-test-\(UUID().uuidString).sh")
+                .appendingPathComponent("launchcraft-test-\(UUID().uuidString).sh")
             do {
                 try job.inlineCode.write(to: tmp, atomically: true, encoding: .utf8)
                 try FileManager.default.setAttributes([.posixPermissions: 0o755], ofItemAtPath: tmp.path)

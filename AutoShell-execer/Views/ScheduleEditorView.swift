@@ -1,6 +1,6 @@
 //
 //  ScheduleEditorView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  スケジュール設定 UI。launchd「かんたん」モードと cron モードを切り替える。
 //

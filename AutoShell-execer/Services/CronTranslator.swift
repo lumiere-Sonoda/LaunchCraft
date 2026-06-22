@@ -1,6 +1,6 @@
 //
 //  CronTranslator.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  cron 式 (5フィールド) を launchd のスケジュールへ変換する。
 //

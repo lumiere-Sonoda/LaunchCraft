@@ -1,14 +1,14 @@
 //
-//  AutoShell_execerApp.swift
-//  AutoShell-execer
+//  LaunchCraftApp.swift
+//  LaunchCraft
 //
-//  launchd を使って シェルスクリプトを定期実行する、cron の管理版アプリ。
+//  launchd を使ってシェルスクリプトを定期実行する、cron の GUI 管理アプリ。
 //
 
 import SwiftUI
 
 @main
-struct AutoShell_execerApp: App {
+struct LaunchCraftApp: App {
     @State private var store = JobStore()
 
     var body: some Scene {

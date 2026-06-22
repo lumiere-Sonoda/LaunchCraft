@@ -1,6 +1,6 @@
 //
 //  JobBundle.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  ジョブ設定の書き出し・読み込みに使うコンテナ。
 //  version フィールドで将来のフォーマット変更に対応できるようにする。

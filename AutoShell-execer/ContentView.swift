@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  メイン画面。左:ジョブ一覧 / 右:編集 / 下:ターミナル風コンソール。
 //
@@ -171,7 +171,7 @@ struct ContentView: View {
         let panel = NSSavePanel()
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyyMMdd"
-        panel.nameFieldStringValue = "AutoShell-\(fmt.string(from: Date())).json"
+        panel.nameFieldStringValue = "LaunchCraft-\(fmt.string(from: Date())).json"
         panel.allowedContentTypes = [UTType.json]
         panel.canCreateDirectories = true
         guard panel.runModal() == .OK, let url = panel.url else { return }
@@ -182,7 +182,7 @@ struct ContentView: View {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = [UTType.json]
         panel.allowsMultipleSelection = false
-        panel.message = String(localized: "AutoShell のジョブファイル (.json) を選択してください")
+        panel.message = String(localized: "LaunchCraft のジョブファイル (.json) を選択してください")
         guard panel.runModal() == .OK,
               let url = panel.url,
               let data = try? Data(contentsOf: url) else { return }

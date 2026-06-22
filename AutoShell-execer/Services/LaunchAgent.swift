@@ -1,6 +1,6 @@
 //
 //  LaunchAgent.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  ShellJob から launchd の plist 辞書を組み立て、ファイルへ書き出す/削除する。
 //

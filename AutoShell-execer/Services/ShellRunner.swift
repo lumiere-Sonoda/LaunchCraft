@@ -1,6 +1,6 @@
 //
 //  ShellRunner.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  プロセスの実行を担当する。
 //   - runCapture: 出力をまとめて受け取る（launchctl 呼び出しなどに使用）

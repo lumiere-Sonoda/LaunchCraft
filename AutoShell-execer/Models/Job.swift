@@ -1,6 +1,6 @@
 //
 //  ShellJob.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  1つのスケジュール実行ジョブを表すモデル。
 //  このアプリの真実の源で、ここから launchd の plist を生成する。
@@ -139,7 +139,7 @@ struct ShellJob: Identifiable, Codable, Hashable {
     var scriptKind: ScriptKind = .inline
     /// 実行に使うインタプリタ。file モードで空文字なら「ファイルを直接実行」。
     var interpreter: String = "/bin/zsh"
-    var inlineCode: String = "#!/bin/zsh\n\necho \"Hello from AutoShell at $(date)\"\n"
+    var inlineCode: String = "#!/bin/zsh\n\necho \"Hello from LaunchCraft at $(date)\"\n"
     var scriptFilePath: String = ""
     var arguments: [String] = []
     var workingDirectory: String = ""

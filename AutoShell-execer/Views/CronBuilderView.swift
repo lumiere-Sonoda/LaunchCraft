@@ -1,6 +1,6 @@
 //
 //  CronBuilderView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  cron 式を、各フィールドのプルダウン＋プリセットで組み立てる。
 //  生の TextField ではなく「見やすく書きやすい」入力を目指す。

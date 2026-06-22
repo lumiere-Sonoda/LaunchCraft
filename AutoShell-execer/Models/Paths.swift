@@ -1,6 +1,6 @@
 //
 //  Paths.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  アプリが使うディレクトリ・ファイルパスを一元管理する。
 //
@@ -8,7 +8,7 @@
 import Foundation
 
 enum Paths {
-    /// 例: ~/Library/Application Support/AutoShell-execer
+    /// 例: ~/Library/Application Support/LaunchCraft
     static var appSupport: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         return base.appendingPathComponent("LaunchCraft", isDirectory: true)

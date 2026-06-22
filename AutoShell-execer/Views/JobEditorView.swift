@@ -1,6 +1,6 @@
 //
 //  JobEditorView.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  選択したジョブの編集フォーム。macOS ネイティブの Form ベース。
 //

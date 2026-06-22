@@ -1,6 +1,6 @@
 //
 //  LaunchctlService.swift
-//  AutoShell-execer
+//  LaunchCraft
 //
 //  launchctl コマンドの薄いラッパー。modern な bootstrap/bootout/enable/disable/kickstart を使う。
 //  ドメインターゲットは gui/<uid>。

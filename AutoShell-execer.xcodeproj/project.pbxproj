@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		CA0FBD8D2FE82F5900DFB7F1 /* AutoShell-execer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoShell-execer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0FBD8D2FE82F5900DFB7F1 /* AutoShell-execer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "AutoShell-execer.app"; path = LaunchCraft.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */

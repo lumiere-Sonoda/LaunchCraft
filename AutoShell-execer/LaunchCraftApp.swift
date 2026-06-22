@@ -12,7 +12,7 @@ struct LaunchCraftApp: App {
     @State private var store = JobStore()
 
     var body: some Scene {
-        WindowGroup {
+        WindowGroup(id: "main") {
             ContentView()
                 .environment(store)
                 .frame(minWidth: 920, minHeight: 600)
@@ -27,5 +27,11 @@ struct LaunchCraftApp: App {
                 .keyboardShortcut("r", modifiers: [.command, .shift])
             }
         }
+
+        MenuBarExtra("LaunchCraft", systemImage: "clock.arrow.circlepath") {
+            MenuBarMenuView()
+                .environment(store)
+        }
+        .menuBarExtraStyle(.window)
     }
 }

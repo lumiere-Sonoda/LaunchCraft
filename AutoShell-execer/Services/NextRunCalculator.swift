@@ -10,7 +10,8 @@
 
 import Foundation
 
-enum NextRunCalculator {
+// 次回実行時刻を算出する純粋関数の集まり。状態を持たないため nonisolated。
+nonisolated enum NextRunCalculator {
 
     // MARK: 次回実行日時
 

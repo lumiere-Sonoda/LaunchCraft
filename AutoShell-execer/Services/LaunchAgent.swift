@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LaunchAgentError: LocalizedError {
+nonisolated enum LaunchAgentError: LocalizedError {
     case scheduleBuildFailed(String)
     var errorDescription: String? {
         switch self {
@@ -16,7 +16,9 @@ enum LaunchAgentError: LocalizedError {
     }
 }
 
-enum LaunchAgent {
+// plist の組み立て・ファイル入出力を行う状態を持たないサービス。
+// launchctl 同期（nonisolated）から呼ぶため MainActor 分離を外す。
+nonisolated enum LaunchAgent {
 
     /// ShellJob から launchd plist の辞書を作る。
     static func plistDictionary(for job: ShellJob) throws -> [String: Any] {

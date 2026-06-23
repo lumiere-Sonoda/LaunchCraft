@@ -15,17 +15,18 @@
 import Foundation
 
 /// launchd 用に変換したスケジュール
-enum LaunchdSchedule: Equatable {
+nonisolated enum LaunchdSchedule: Equatable {
     case interval(Int)                  // StartInterval（秒）
     case calendar([[String: Int]])      // StartCalendarInterval の配列
 }
 
-struct CronParseError: LocalizedError {
+nonisolated struct CronParseError: LocalizedError {
     let message: String
     var errorDescription: String? { message }
 }
 
-enum CronTranslator {
+// cron ↔ launchd 変換を行う純粋関数の集まり。状態を持たず副作用もないため nonisolated。
+nonisolated enum CronTranslator {
 
     /// 1つのフィールドが取りうる値の集合に変換する。
     /// `*` の場合は nil（ワイルドカード）を返す。

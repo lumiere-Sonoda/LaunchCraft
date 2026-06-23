@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct LaunchctlOutcome: Sendable {
+nonisolated struct LaunchctlOutcome: Sendable {
     let success: Bool
     let detail: String
 }
 
 /// ジョブの実行履歴（launchctl print + ログファイル更新日時から取得）
-struct JobRunInfo: Sendable {
+nonisolated struct JobRunInfo: Sendable {
     let lastExitCode: Int?
     let lastRunAt: Date?
 }
 
 /// launchd 上のジョブの状態
-enum JobRuntimeState: Sendable, Equatable {
+nonisolated enum JobRuntimeState: Sendable, Equatable {
     case notLoaded            // bootstrap されていない
     case loaded(pid: Int?)    // 読み込まれている（pid があれば実行中）
     case unknown

@@ -15,7 +15,7 @@ import Foundation
 /// 曜日の短い名前。0=日 〜 6=土。
 /// 「日」「月」などは他の語（日付の「日」・曜日の「月」など）と衝突するため、
 /// 文脈ごとに独立したキーを与えて翻訳する。
-enum WeekdaySymbols {
+nonisolated enum WeekdaySymbols {
     static func short(_ index: Int) -> String {
         switch ((index % 7) + 7) % 7 {
         case 0:  return String(localized: "weekday.short.sun", defaultValue: "日")
@@ -33,7 +33,7 @@ enum WeekdaySymbols {
 // MARK: - 補助的な列挙型
 
 /// スクリプトの指定方法
-enum ScriptKind: String, Codable, CaseIterable, Identifiable {
+nonisolated enum ScriptKind: String, Codable, CaseIterable, Identifiable {
     case inline   // アプリ内に書いたコード
     case file     // 既存の .sh などのファイルを指定
     var id: String { rawValue }
@@ -46,7 +46,7 @@ enum ScriptKind: String, Codable, CaseIterable, Identifiable {
 }
 
 /// スケジュールの入力モード
-enum ScheduleMode: String, Codable, CaseIterable, Identifiable {
+nonisolated enum ScheduleMode: String, Codable, CaseIterable, Identifiable {
     case launchd  // わかりやすいビルダー
     case cron     // cron 式
     var id: String { rawValue }
@@ -59,7 +59,7 @@ enum ScheduleMode: String, Codable, CaseIterable, Identifiable {
 }
 
 /// launchd モードのスケジュール種別
-enum LaunchdKind: String, Codable, CaseIterable, Identifiable {
+nonisolated enum LaunchdKind: String, Codable, CaseIterable, Identifiable {
     case interval  // 一定間隔ごと (StartInterval)
     case calendar  // 決まった時刻 (StartCalendarInterval)
     var id: String { rawValue }
@@ -72,7 +72,7 @@ enum LaunchdKind: String, Codable, CaseIterable, Identifiable {
 }
 
 /// 間隔の単位
-enum IntervalUnit: String, Codable, CaseIterable, Identifiable {
+nonisolated enum IntervalUnit: String, Codable, CaseIterable, Identifiable {
     case seconds, minutes, hours, days
     var id: String { rawValue }
     var label: String {
@@ -94,7 +94,7 @@ enum IntervalUnit: String, Codable, CaseIterable, Identifiable {
 }
 
 /// カレンダー実行の頻度
-enum CalendarFrequency: String, Codable, CaseIterable, Identifiable {
+nonisolated enum CalendarFrequency: String, Codable, CaseIterable, Identifiable {
     case hourly  // 毎時 MM 分
     case daily   // 毎日 HH:MM
     case weekly  // 毎週 指定曜日 HH:MM
@@ -111,14 +111,14 @@ enum CalendarFrequency: String, Codable, CaseIterable, Identifiable {
 }
 
 /// 環境変数の1エントリ
-struct EnvVar: Codable, Hashable, Identifiable {
+nonisolated struct EnvVar: Codable, Hashable, Identifiable {
     var id: UUID = UUID()
     var key: String = ""
     var value: String = ""
 }
 
 /// カレンダー実行の詳細設定
-struct CalendarSchedule: Codable, Hashable {
+nonisolated struct CalendarSchedule: Codable, Hashable {
     var frequency: CalendarFrequency = .daily
     var minute: Int = 0
     var hour: Int = 9
@@ -130,7 +130,9 @@ struct CalendarSchedule: Codable, Hashable {
 
 // MARK: - ShellJob 本体
 
-struct ShellJob: Identifiable, Codable, Hashable {
+// アプリの真実の源となるデータモデル。UI を一切触らず、launchctl 実行などの
+// バックグラウンド（nonisolated）処理からも参照するため、既定の MainActor 分離を外す。
+nonisolated struct ShellJob: Identifiable, Codable, Hashable {
     var id: UUID = UUID()
     var name: String = "新しいジョブ"
     var enabled: Bool = true

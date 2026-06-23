@@ -7,7 +7,9 @@
 
 import Foundation
 
-enum Paths {
+// パスを組み立てるだけの状態を持たないユーティリティ。
+// バックグラウンド（nonisolated）処理からも使うため MainActor 分離を外す。
+nonisolated enum Paths {
     /// 例: ~/Library/Application Support/LaunchCraft
     static var appSupport: URL {
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!

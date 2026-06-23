@@ -29,7 +29,7 @@ enum ShellRunner {
     /// stdout / stderr を別スレッドで読み切るための受け皿。
     /// DispatchGroup の enter/leave/wait がメモリバリアになるため、
     /// wait 後に読む限りデータ競合は起きない（@unchecked Sendable で明示）。
-    private final class OutputBox: @unchecked Sendable {
+    private nonisolated final class OutputBox: @unchecked Sendable {
         var out = Data()
         var err = Data()
     }

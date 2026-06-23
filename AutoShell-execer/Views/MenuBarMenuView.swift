@@ -18,21 +18,31 @@ struct MenuBarMenuView: View {
     @Environment(\.openWindow) private var openWindow
 
     var body: some View {
-        // body の先頭で参照することで @Observable の変更通知を確実に受け取る
-        let jobs   = store.jobs
-        let states = store.states
-
         VStack(alignment: .leading, spacing: 0) {
             menuHeader
             Divider()
-            TimelineView(.periodic(from: .now, by: 30)) { _ in
-                jobListView(jobs: jobs, states: states)
+            // store.jobs / store.states は TimelineView のクロージャ内で読む。
+            // MenuBarExtra は @Observable の変更通知を取りこぼすことがあるため、
+            // 外側の body の再評価に頼ると、メインウィンドウで追加したジョブが
+            // メニューに反映されないことがある。TimelineView は自前のスケジュールで
+            // 再描画されるので、ここで最新を読み直せばパネルを開いた瞬間＋一定間隔で
+            // 確実に最新のジョブ一覧へ追従する。
+            TimelineView(.periodic(from: .now, by: 3)) { _ in
+                VStack(spacing: 0) {
+                    jobListView(jobs: store.jobs, states: store.states)
+                    statusMessageView
+                }
             }
             Divider()
             menuFooter
         }
         .frame(width: 300)
-        .task { await store.refreshAllStates() }
+        .task {
+            // MenuBarExtra は @Observable の更新を取りこぼすことがあるため、開くたびに
+            // 真実の源(JSON)から読み直す。外部編集や別ウィンドウでの追加/削除にも追従できる。
+            store.load()
+            await store.refreshAllStates()
+        }
     }
 
     // MARK: ヘッダー
@@ -62,17 +72,49 @@ struct MenuBarMenuView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 28)
         } else {
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(Array(jobs.enumerated()), id: \.element.id) { index, job in
-                        if index > 0 {
-                            Divider().padding(.leading, 32)
-                        }
-                        MenuBarJobRow(job: job, state: states[job.id] ?? .unknown)
+            // 行を組む VStack は固有の高さを持つ。MenuBarExtra(.window) のウィンドウは
+            // 内容の理想サイズに合わせて高さを決めるため、ScrollView に高さを任せると
+            // スクロール軸の理想高さがほぼ 0 と申告され、パネルがつぶれて行が描画されない。
+            // 少数なら VStack をそのまま返し、多いときだけ高さを確定した ScrollView に入れる。
+            let rows = VStack(spacing: 0) {
+                ForEach(Array(jobs.enumerated()), id: \.element.id) { index, job in
+                    if index > 0 {
+                        Divider().padding(.leading, 32)
                     }
+                    MenuBarJobRow(job: job, state: states[job.id] ?? .unknown)
                 }
             }
-            .frame(maxHeight: 320)
+
+            if jobs.count <= 6 {
+                rows
+            } else {
+                ScrollView { rows }
+                    .frame(height: 320)
+            }
+        }
+    }
+
+    // MARK: 直近の実行結果メッセージ
+
+    @ViewBuilder
+    private var statusMessageView: some View {
+        // store.lastMessage は TimelineView のクロージャ内（jobListView と同じ場所）で
+        // 読まれるため、観測を取りこぼしても数秒で最新へ追従する。
+        if !store.lastMessage.isEmpty {
+            Divider()
+            HStack(alignment: .top, spacing: 6) {
+                Image(systemName: store.lastMessageIsError ? "exclamationmark.triangle.fill" : "checkmark.circle.fill")
+                    .foregroundStyle(store.lastMessageIsError ? Color.orange : Color.green)
+                    .imageScale(.small)
+                Text(store.lastMessage)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 8)
         }
     }
 

@@ -137,6 +137,35 @@ enum LaunchctlService {
         return .loaded(pid: nil)
     }
 
+    /// すべての対象ラベルの状態を 1 回の `launchctl list` でまとめて取得する。
+    /// ジョブごとに `print`（重い）を呼ぶより圧倒的に速い（プロセス起動も解析も 1 回）。
+    /// 取得に失敗したら空辞書を返し、呼び出し側で既存表示を維持できるようにする。
+    nonisolated static func listStates(labels: [String]) async -> [String: JobRuntimeState] {
+        let r = await ShellRunner.runCapture(executable: launchctl, arguments: ["list"])
+        guard r.status == 0 else { return [:] }
+
+        // 出力は "PID\tStatus\tLabel" のタブ区切り（1 行目はヘッダ）。
+        // PID が数値なら実行中、"-" なら読み込み済みで停止中。
+        let wanted = Set(labels)
+        var result: [String: JobRuntimeState] = [:]
+        for line in r.stdout.split(separator: "\n") {
+            let cols = line.split(separator: "\t", omittingEmptySubsequences: false)
+            guard cols.count >= 3 else { continue }
+            let label = cols[2].trimmingCharacters(in: .whitespaces)
+            guard wanted.contains(label) else { continue }
+            if let pid = Int(cols[0].trimmingCharacters(in: .whitespaces)) {
+                result[label] = .loaded(pid: pid)
+            } else {
+                result[label] = .loaded(pid: nil)
+            }
+        }
+        // list に出てこなかった対象は未読込
+        for label in labels where result[label] == nil {
+            result[label] = .notLoaded
+        }
+        return result
+    }
+
     // MARK: 高レベル操作
 
     /// ジョブを launchd に反映する（plist 書き出し → 既存を bootout → enable/disable → 必要なら bootstrap）。

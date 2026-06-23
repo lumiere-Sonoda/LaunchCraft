@@ -4,7 +4,7 @@
 //
 //  メニューバー常駐パネル。
 //  - store.jobs / store.states は body の先頭で参照し、@Observable の観測トラッキングを確実に登録する。
-//  - TimelineView で 3 秒ごとに「次回実行まで」ラベルを再描画する。
+//  - TimelineView で一定間隔（10 秒）に「次回実行まで」ラベルを再描画する。
 //  - ウィンドウを開く際は NSApp で既存ウィンドウを探し、無ければ openWindow で新規作成する。
 //
 
@@ -29,7 +29,7 @@ struct MenuBarMenuView: View {
             // メニューに反映されないことがある。TimelineView は自前のスケジュールで
             // 再描画されるので、ここで最新を読み直せばパネルを開いた瞬間＋一定間隔で
             // 確実に最新のジョブ一覧へ追従する。
-            TimelineView(.periodic(from: .now, by: 3)) { _ in
+            TimelineView(.periodic(from: .now, by: 10)) { _ in
                 VStack(spacing: 0) {
                     jobListView(jobs: store.jobs, states: store.states)
                     statusMessageView
@@ -113,7 +113,7 @@ struct MenuBarMenuView: View {
                         .padding(.vertical, 10)
                         .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(MenuRowButtonStyle())
                 } else if isExpanded {
                     Divider()
                     Button {
@@ -130,7 +130,7 @@ struct MenuBarMenuView: View {
                         .padding(.vertical, 10)
                         .contentShape(Rectangle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(MenuRowButtonStyle())
                     .foregroundStyle(.secondary)
                 }
             }
@@ -195,7 +195,7 @@ struct MenuBarMenuView: View {
             .padding(.vertical, 11)
             .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(MenuRowButtonStyle())
     }
 
     // MARK: ウィンドウを開く
@@ -222,6 +222,7 @@ struct MenuBarJobRow: View {
 
     @Environment(JobStore.self) private var store
     @State private var isRunning = false
+    @State private var isHovering = false
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
@@ -238,7 +239,7 @@ struct MenuBarJobRow: View {
                     .fontWeight(.medium)
                     .lineLimit(1)
 
-                if job.enabled, let label = NextRunCalculator.nextRunLabel(for: job) {
+                if job.enabled, let label = store.nextRunLabel(for: job) {
                     Text("次回: \(label)")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
@@ -264,7 +265,7 @@ struct MenuBarJobRow: View {
                     .imageScale(.small)
                     .frame(width: 26, height: 26)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(IconHoverButtonStyle())
             .foregroundStyle(isRunning ? Color.secondary : Color.accentColor)
             .help("今すぐ実行")
 
@@ -276,13 +277,22 @@ struct MenuBarJobRow: View {
                     .imageScale(.medium)
                     .frame(width: 26, height: 26)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(IconHoverButtonStyle())
             .foregroundStyle(job.enabled ? Color.green : Color.gray)
             .help(job.enabled ? "無効にする" : "有効にする")
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 9)
+        // 行全体をカーソルで覆うとうっすら光らせる（NSMenu 風のハイライト）。
+        .background(
+            RoundedRectangle(cornerRadius: 6, style: .continuous)
+                .fill(Color.accentColor.opacity(isHovering ? 0.12 : 0))
+                .padding(.horizontal, 6)
+                .padding(.vertical, 1)
+        )
         .contentShape(Rectangle())
+        .onHover { isHovering = $0 }
+        .animation(.easeOut(duration: 0.12), value: isHovering)
     }
 
     private var statusColor: Color {
@@ -291,6 +301,72 @@ struct MenuBarJobRow: View {
         case .loaded(let pid): return pid != nil ? .green : .blue
         case .notLoaded:       return .gray.opacity(0.5)
         case .unknown:         return .secondary
+        }
+    }
+}
+
+// MARK: - ホバー／押下で光るボタンスタイル
+
+/// メニュー項目用のボタンスタイル。
+/// カーソルを乗せると行全体がうっすら光り、押下中は少し濃くなる（AppKit の NSMenu 風）。
+/// `.buttonStyle(.plain)` は標準のハイライトを消してしまうため、代わりにこれを使う。
+/// ハイライトはパネル端から少し内側に丸角で描く。
+private struct MenuRowButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HoverRow(configuration: configuration)
+    }
+
+    // @State / .onHover を確実に効かせるため、スタイル内で View に切り出す。
+    private struct HoverRow: View {
+        let configuration: ButtonStyleConfiguration
+        @State private var isHovering = false
+
+        var body: some View {
+            configuration.label
+                .background(
+                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                        .fill(Color.accentColor.opacity(fillOpacity))
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 1)
+                )
+                .contentShape(Rectangle())
+                .onHover { isHovering = $0 }
+                .animation(.easeOut(duration: 0.12), value: isHovering)
+                .animation(.easeOut(duration: 0.10), value: configuration.isPressed)
+        }
+
+        private var fillOpacity: Double {
+            if configuration.isPressed { return 0.30 }
+            return isHovering ? 0.16 : 0
+        }
+    }
+}
+
+/// 小さなアイコンボタン用のスタイル。丸い背景がホバーで光り、押下で少し沈む。
+private struct IconHoverButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HoverIcon(configuration: configuration)
+    }
+
+    private struct HoverIcon: View {
+        let configuration: ButtonStyleConfiguration
+        @State private var isHovering = false
+
+        var body: some View {
+            configuration.label
+                .background(
+                    Circle().fill(Color.primary.opacity(fillOpacity))
+                )
+                .contentShape(Rectangle())
+                .scaleEffect(configuration.isPressed ? 0.90 : 1)
+                .onHover { isHovering = $0 }
+                .animation(.easeOut(duration: 0.12), value: isHovering)
+                .animation(.easeOut(duration: 0.10), value: configuration.isPressed)
+        }
+
+        private var fillOpacity: Double {
+            if configuration.isPressed { return 0.20 }
+            return isHovering ? 0.12 : 0
         }
     }
 }

@@ -67,7 +67,12 @@ enum NextRunCalculator {
     /// 次回実行時刻を人間向けの短い文字列で返す。
     static func nextRunLabel(for job: ShellJob) -> String? {
         guard let date = nextRun(for: job) else { return nil }
+        return relativeLabel(for: date)
+    }
 
+    /// 次回実行 Date を人間向けの短い相対表記へ整形する（毎秒変わるが軽い処理）。
+    /// 重い `nextRun(for:)`（Calendar.nextDate）はキャッシュ側で済ませ、ここは整形のみ。
+    static func relativeLabel(for date: Date) -> String {
         let now = Date()
         let diff = date.timeIntervalSince(now)
 

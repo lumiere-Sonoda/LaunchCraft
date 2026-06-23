@@ -21,6 +21,11 @@ final class JobStore {
     @ObservationIgnored
     private var clearMessageTask: Task<Void, Never>?
 
+    /// 次回実行時刻のキャッシュ（calendar/cron のみ）。Calendar.nextDate は重いので
+    /// 行を描画するたびに計算せず、ジョブ変更時にまとめて算出して使い回す。
+    @ObservationIgnored
+    private var nextRunCache: [UUID: Date] = [:]
+
     @ObservationIgnored
     private let encoder: JSONEncoder = {
         let e = JSONEncoder()
@@ -48,6 +53,7 @@ final class JobStore {
             at: Paths.jobsDir, includingPropertiesForKeys: nil
         ) else {
             jobs = []
+            nextRunCache = [:]
             return
         }
         var loaded: [ShellJob] = []
@@ -58,6 +64,7 @@ final class JobStore {
             }
         }
         jobs = loaded.sorted { $0.createdAt < $1.createdAt }
+        recomputeNextRuns()
     }
 
     private func persist(_ job: ShellJob) throws {
@@ -100,6 +107,7 @@ final class JobStore {
         report(outcome.detail, isError: !outcome.success)
         await refreshState(for: updated)
         await refreshRunInfo(for: updated)
+        recomputeNextRuns()
     }
 
     /// 有効/無効を切り替えて反映する。
@@ -111,6 +119,7 @@ final class JobStore {
         let outcome = await LaunchctlService.sync(job: updated)
         report(outcome.detail, isError: !outcome.success)
         await refreshState(for: updated)
+        recomputeNextRuns()
     }
 
     /// 今すぐ実行。実行後にログを読みたい場合は呼び出し側でログ URL を参照する。
@@ -211,9 +220,50 @@ final class JobStore {
     }
 
     func refreshAllStates() async {
-        for job in jobs {
-            states[job.id] = await LaunchctlService.state(label: job.label)
+        // 全ジョブの状態は `launchctl list` 1 回でまとめて取得する。
+        // 以前はジョブごとに `launchctl print`（重い）を呼んでいて、メニューを開くたびに
+        // 状態ドットが 1 つずつ遅れて点灯しもたついていた。1 プロセス＋1 回の解析で
+        // 全件そろえ、反映も `merge` で 1 回だけ（再描画も 1 回）。
+        let targets = jobs.map { (id: $0.id, label: $0.label) }
+        guard !targets.isEmpty else { return }
+        let byLabel = await LaunchctlService.listStates(labels: targets.map(\.label))
+        guard !byLabel.isEmpty else { return }   // 取得失敗時は既存表示を維持
+        var resolved: [UUID: JobRuntimeState] = [:]
+        for target in targets {
+            resolved[target.id] = byLabel[target.label] ?? .notLoaded
         }
+        states.merge(resolved) { _, new in new }
+    }
+
+    // MARK: 次回実行時刻（重い計算をキャッシュ）
+
+    /// calendar/cron の次回実行時刻だけ事前計算してキャッシュする。
+    /// `Calendar.nextDate` は重く、メニューの行を描画するたびに全ジョブ分まわすと
+    /// もたつくため、ここで一度だけ計算して `nextRunLabel(for:)` から使い回す。
+    /// interval は「今＋間隔」の近似で軽いのでキャッシュせず都度算出する。
+    func recomputeNextRuns() {
+        var cache: [UUID: Date] = [:]
+        for job in jobs where job.enabled {
+            if job.scheduleMode == .launchd, job.launchdKind == .interval { continue }
+            if let date = NextRunCalculator.nextRun(for: job) {
+                cache[job.id] = date
+            }
+        }
+        nextRunCache = cache
+    }
+
+    /// 行に表示する「次回実行まで」ラベル。重い日付計算はキャッシュから取り、
+    /// 相対表記への整形（毎秒変わる軽い処理）だけその場で行う。
+    func nextRunLabel(for job: ShellJob) -> String? {
+        guard job.enabled else { return nil }
+        let date: Date?
+        if job.scheduleMode == .launchd, job.launchdKind == .interval {
+            date = NextRunCalculator.nextRun(for: job)
+        } else {
+            date = nextRunCache[job.id] ?? NextRunCalculator.nextRun(for: job)
+        }
+        guard let date else { return nil }
+        return NextRunCalculator.relativeLabel(for: date)
     }
 
     func state(for job: ShellJob) -> JobRuntimeState {

@@ -242,11 +242,11 @@ struct MenuBarJobRow: View {
                 if job.enabled, let label = store.nextRunLabel(for: job) {
                     Text("次回: \(label)")
                         .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(isHovering ? AnyShapeStyle(Color.white.opacity(0.75)) : AnyShapeStyle(.secondary))
                 } else if !job.enabled {
                     Text("無効")
                         .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(isHovering ? AnyShapeStyle(Color.white.opacity(0.65)) : AnyShapeStyle(.tertiary))
                 }
             }
 
@@ -266,7 +266,9 @@ struct MenuBarJobRow: View {
                     .frame(width: 26, height: 26)
             }
             .buttonStyle(IconHoverButtonStyle())
-            .foregroundStyle(isRunning ? Color.secondary : Color.accentColor)
+            .foregroundStyle(isRunning
+                ? (isHovering ? Color.white.opacity(0.5) : Color.secondary)
+                : (isHovering ? Color.white : Color.accentColor))
             .help("今すぐ実行")
 
             // 有効/無効トグル
@@ -278,21 +280,21 @@ struct MenuBarJobRow: View {
                     .frame(width: 26, height: 26)
             }
             .buttonStyle(IconHoverButtonStyle())
-            .foregroundStyle(job.enabled ? Color.green : Color.gray)
+            .foregroundStyle(isHovering ? Color.white : (job.enabled ? Color.green : Color.gray))
             .help(job.enabled ? "無効にする" : "有効にする")
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 9)
-        // 行全体をカーソルで覆うとうっすら光らせる（NSMenu 風のハイライト）。
+        .foregroundStyle(isHovering ? Color.white : Color.primary)
         .background(
             RoundedRectangle(cornerRadius: 6, style: .continuous)
-                .fill(Color.accentColor.opacity(isHovering ? 0.12 : 0))
+                .fill(isHovering ? Color.accentColor : Color.clear)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 1)
         )
         .contentShape(Rectangle())
         .onHover { isHovering = $0 }
-        .animation(.easeOut(duration: 0.12), value: isHovering)
+        .animation(.easeOut(duration: 0.08), value: isHovering)
     }
 
     private var statusColor: Color {
@@ -321,23 +323,21 @@ private struct MenuRowButtonStyle: ButtonStyle {
         let configuration: ButtonStyleConfiguration
         @State private var isHovering = false
 
+        private var isHighlighted: Bool { isHovering || configuration.isPressed }
+
         var body: some View {
             configuration.label
+                .foregroundStyle(isHighlighted ? Color.white : Color.primary)
                 .background(
                     RoundedRectangle(cornerRadius: 6, style: .continuous)
-                        .fill(Color.accentColor.opacity(fillOpacity))
+                        .fill(isHighlighted ? Color.accentColor : Color.clear)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 1)
                 )
                 .contentShape(Rectangle())
                 .onHover { isHovering = $0 }
-                .animation(.easeOut(duration: 0.12), value: isHovering)
-                .animation(.easeOut(duration: 0.10), value: configuration.isPressed)
-        }
-
-        private var fillOpacity: Double {
-            if configuration.isPressed { return 0.30 }
-            return isHovering ? 0.16 : 0
+                .animation(.easeOut(duration: 0.08), value: isHovering)
+                .animation(.easeOut(duration: 0.08), value: configuration.isPressed)
         }
     }
 }

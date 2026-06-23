@@ -1,1 +1,5 @@
 build/
+
+# Xcode のユーザー固有状態（ブレークポイント・ウィンドウ配置など）。共有しない。
+*.xcuserstate
+**/xcuserdata/

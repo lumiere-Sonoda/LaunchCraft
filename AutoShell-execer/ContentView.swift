@@ -11,11 +11,14 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @Environment(JobStore.self) private var store
+    @Environment(AppSettings.self) private var settings
     @State private var console = TerminalConsole()
     @State private var selection: ShellJob.ID?
     @State private var windowWidth: CGFloat = 1200
 
     var body: some View {
+        @Bindable var settings = settings
+
         VStack(spacing: 0) {
             NavigationSplitView {
                 sidebar
@@ -38,6 +41,10 @@ struct ContentView: View {
             proxy.size.width
         } action: { width in
             windowWidth = width
+        }
+        .sheet(isPresented: $settings.showSettings) {
+            SettingsView()
+                .environment(settings)
         }
     }
 

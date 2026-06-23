@@ -4,7 +4,7 @@
 //
 //  メニューバー常駐パネル。
 //  - store.jobs / store.states は body の先頭で参照し、@Observable の観測トラッキングを確実に登録する。
-//  - TimelineView で 30 秒ごとに「次回実行まで」ラベルを再描画する。
+//  - TimelineView で 3 秒ごとに「次回実行まで」ラベルを再描画する。
 //  - ウィンドウを開く際は NSApp で既存ウィンドウを探し、無ければ openWindow で新規作成する。
 //
 
@@ -15,7 +15,9 @@ import AppKit
 
 struct MenuBarMenuView: View {
     @Environment(JobStore.self) private var store
+    @Environment(AppSettings.self) private var settings
     @Environment(\.openWindow) private var openWindow
+    @State private var isExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -38,6 +40,7 @@ struct MenuBarMenuView: View {
         }
         .frame(width: 300)
         .task {
+            isExpanded = false
             // MenuBarExtra は @Observable の更新を取りこぼすことがあるため、開くたびに
             // 真実の源(JSON)から読み直す。外部編集や別ウィンドウでの追加/削除にも追従できる。
             store.load()
@@ -48,17 +51,11 @@ struct MenuBarMenuView: View {
     // MARK: ヘッダー
 
     private var menuHeader: some View {
-        HStack(spacing: 8) {
-            Text("LaunchCraft")
-                .font(.headline)
-            Spacer()
-            Button("開く") { openMainWindow() }
-                .font(.callout)
-                .buttonStyle(.plain)
-                .foregroundStyle(.tint)
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 10)
+        Text("LaunchCraft")
+            .font(.headline)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
     }
 
     // MARK: ジョブ一覧
@@ -72,12 +69,17 @@ struct MenuBarMenuView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 28)
         } else {
+            // 表示件数上限を isExpanded に応じて切り替える。
             // 行を組む VStack は固有の高さを持つ。MenuBarExtra(.window) のウィンドウは
             // 内容の理想サイズに合わせて高さを決めるため、ScrollView に高さを任せると
             // スクロール軸の理想高さがほぼ 0 と申告され、パネルがつぶれて行が描画されない。
             // 少数なら VStack をそのまま返し、多いときだけ高さを確定した ScrollView に入れる。
-            let rows = VStack(spacing: 0) {
-                ForEach(Array(jobs.enumerated()), id: \.element.id) { index, job in
+            let limit = isExpanded ? jobs.count : settings.menuBarJobCount
+            let displayed = Array(jobs.prefix(limit))
+            let hiddenCount = jobs.count - displayed.count
+
+            let innerRows = VStack(spacing: 0) {
+                ForEach(Array(displayed.enumerated()), id: \.element.id) { index, job in
                     if index > 0 {
                         Divider().padding(.leading, 32)
                     }
@@ -85,11 +87,52 @@ struct MenuBarMenuView: View {
                 }
             }
 
-            if jobs.count <= 6 {
-                rows
-            } else {
-                ScrollView { rows }
-                    .frame(height: 320)
+            VStack(spacing: 0) {
+                if displayed.count <= 6 {
+                    innerRows
+                } else {
+                    ScrollView { innerRows }
+                        .frame(height: 320)
+                }
+
+                // More / 閉じる ボタン
+                if hiddenCount > 0 {
+                    Divider()
+                    Button {
+                        isExpanded = true
+                    } label: {
+                        HStack {
+                            Text("More")
+                                .font(.callout)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .imageScale(.small)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                } else if isExpanded {
+                    Divider()
+                    Button {
+                        isExpanded = false
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "chevron.up")
+                                .imageScale(.small)
+                            Text("閉じる")
+                                .font(.callout)
+                            Spacer()
+                        }
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundStyle(.secondary)
+                }
             }
         }
     }
@@ -118,41 +161,41 @@ struct MenuBarMenuView: View {
         }
     }
 
-    // MARK: フッター
+    // MARK: フッター（Codex スタイルの縦並びボタン）
 
     private var menuFooter: some View {
-        HStack(spacing: 6) {
-            Button {
+        VStack(spacing: 0) {
+            menuButton(label: "新しいジョブ", icon: "plus") {
                 openMainWindow()
-            } label: {
-                Label("新しいジョブ", systemImage: "plus")
-                    .font(.caption)
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(.tint)
-
-            Spacer()
-
-            Button {
-                Task { await store.refreshAllStates() }
-            } label: {
-                Image(systemName: "arrow.clockwise")
+            Divider()
+            menuButton(label: "開く") {
+                openMainWindow()
             }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
-            .help("すべてのジョブの状態を更新")
-
-            Divider().frame(height: 14)
-
-            Button("終了") {
+            Divider()
+            menuButton(label: "終了") {
                 NSApp.terminate(nil)
             }
-            .buttonStyle(.plain)
-            .font(.callout)
-            .foregroundStyle(.secondary)
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 10)
+    }
+
+    private func menuButton(label: String, icon: String? = nil, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                if let icon {
+                    Image(systemName: icon)
+                        .imageScale(.small)
+                        .frame(width: 16)
+                }
+                Text(label)
+                    .font(.callout)
+                Spacer()
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 11)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
     }
 
     // MARK: ウィンドウを開く
@@ -166,7 +209,6 @@ struct MenuBarMenuView: View {
         }) {
             w.makeKeyAndOrderFront(nil)
         } else {
-            // ウィンドウが閉じられていた場合のみ新規作成
             openWindow(id: "main")
         }
     }

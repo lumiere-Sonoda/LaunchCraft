@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct LaunchCraftApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var store = JobStore()
 
     var body: some Scene {

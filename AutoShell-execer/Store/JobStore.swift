@@ -19,6 +19,9 @@ final class JobStore {
     var lastMessageIsError: Bool = false
 
     @ObservationIgnored
+    private var clearMessageTask: Task<Void, Never>?
+
+    @ObservationIgnored
     private let encoder: JSONEncoder = {
         let e = JSONEncoder()
         e.outputFormatting = [.prettyPrinted, .sortedKeys]
@@ -110,9 +113,18 @@ final class JobStore {
         await refreshState(for: updated)
     }
 
-    /// 今すぐ実行（kickstart）。実行後にログを読みたい場合は呼び出し側でログ URL を参照する。
+    /// 今すぐ実行。実行後にログを読みたい場合は呼び出し側でログ URL を参照する。
     func runNow(_ job: ShellJob) async -> LaunchctlOutcome {
-        // 無効/未読込なら一度反映してから実行
+        // 無効ジョブは launchd に登録されていない（kickstart が失敗する）ため、
+        // launchd を介さず直接実行する。enabled の状態は変えない。
+        if !job.enabled {
+            let outcome = await runDirect(job)
+            report(outcome.detail, isError: !outcome.success)
+            await refreshRunInfo(for: job)
+            return outcome
+        }
+
+        // 有効ジョブ: 未読込なら一度反映してから kickstart する。
         let state = await LaunchctlService.state(label: job.label)
         if state == .notLoaded {
             _ = await LaunchctlService.sync(job: job)
@@ -124,6 +136,56 @@ final class JobStore {
         try? await Task.sleep(nanoseconds: 800_000_000)
         await refreshRunInfo(for: job)
         return outcome
+    }
+
+    /// 無効ジョブ用の直接実行。launchd を介さずスクリプトを実行し、出力をログへ追記する。
+    private func runDirect(_ job: ShellJob) async -> LaunchctlOutcome {
+        // インラインスクリプトを最新化（file モードでは何もしない）
+        try? LaunchAgent.writeInlineScript(for: job)
+
+        if job.scriptKind == .file,
+           job.scriptFilePath.isEmpty || !FileManager.default.fileExists(atPath: job.scriptFilePath) {
+            return LaunchctlOutcome(success: false, detail: String(localized: "run.scriptNotFound", defaultValue: "スクリプトファイルが見つかりません"))
+        }
+
+        let args = job.programArguments
+        guard let exe = args.first else {
+            return LaunchctlOutcome(success: false, detail: String(localized: "run.noCommand", defaultValue: "実行するコマンドがありません"))
+        }
+        let wd = job.workingDirectory
+        let result = await ShellRunner.runCapture(
+            executable: exe,
+            arguments: Array(args.dropFirst()),
+            environment: job.environmentDictionary,
+            currentDirectory: wd.isEmpty ? nil : wd
+        )
+
+        // launchd と同じようにログファイルへ追記する（「ログを見る」「最終実行」で参照できる）。
+        appendToLog(result.stdout, at: job.stdoutLogURL)
+        appendToLog(result.stderr, at: job.stderrLogURL)
+
+        if result.status == 0 {
+            return LaunchctlOutcome(success: true, detail: String(localized: "run.directSuccess", defaultValue: "実行しました（無効ジョブを直接実行）"))
+        }
+        let err = result.stderr.trimmingCharacters(in: .whitespacesAndNewlines)
+        let detail = err.isEmpty
+            ? String(localized: "run.directFailed", defaultValue: "終了コード \(Int(result.status))")
+            : err
+        return LaunchctlOutcome(success: false, detail: detail)
+    }
+
+    /// テキストをログファイルへ追記する（無ければ作成）。
+    private func appendToLog(_ text: String, at url: URL) {
+        guard !text.isEmpty, let data = text.data(using: .utf8) else { return }
+        Paths.ensureDirectories()
+        if FileManager.default.fileExists(atPath: url.path),
+           let handle = try? FileHandle(forWritingTo: url) {
+            defer { try? handle.close() }
+            _ = try? handle.seekToEnd()
+            try? handle.write(contentsOf: data)
+        } else {
+            try? data.write(to: url, options: .atomic)
+        }
     }
 
     /// ジョブを削除する。
@@ -209,5 +271,15 @@ final class JobStore {
     func report(_ message: String, isError: Bool) {
         lastMessage = message
         lastMessageIsError = isError
+
+        // メインウィンドウが閉じている（メニューバー常駐）場合でもメッセージが
+        // 残り続けないよう、ストア側で 4 秒後に自動でクリアする。
+        clearMessageTask?.cancel()
+        guard !message.isEmpty else { return }
+        clearMessageTask = Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 4_000_000_000)
+            guard !Task.isCancelled else { return }
+            self?.lastMessage = ""
+        }
     }
 }

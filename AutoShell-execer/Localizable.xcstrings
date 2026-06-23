@@ -183,9 +183,6 @@
         }
       }
     },
-    "LaunchCraft のジョブファイル (.json) を選択してください" : {
-
-    },
     "console.exitCode" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -672,6 +669,12 @@
         }
       }
     },
+    "LaunchCraft" : {
+
+    },
+    "LaunchCraft のジョブファイル (.json) を選択してください" : {
+
+    },
     "launchd の登録を解除し、設定とログを削除します。" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -820,6 +823,50 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "plist の書き出しに失敗: %@"
+          }
+        }
+      }
+    },
+    "run.directFailed" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "終了コード %lld"
+          }
+        }
+      }
+    },
+    "run.directSuccess" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "実行しました（無効ジョブを直接実行）"
+          }
+        }
+      }
+    },
+    "run.noCommand" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "実行するコマンドがありません"
+          }
+        }
+      }
+    },
+    "run.scriptNotFound" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "スクリプトファイルが見つかりません"
           }
         }
       }
@@ -1456,6 +1503,9 @@
         }
       }
     },
+    "ジョブがありません" : {
+
+    },
     "ジョブが選択されていません" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1580,6 +1630,9 @@
           }
         }
       }
+    },
+    "すべてのジョブの状態を更新" : {
+
     },
     "その他" : {
 
@@ -2580,6 +2633,9 @@
         }
       }
     },
+    "終了" : {
+
+    },
     "自動更新" : {
 
     },
@@ -2638,6 +2694,9 @@
       }
     },
     "閉じる" : {
+
+    },
+    "開く" : {
 
     },
     "間隔モードはアプリ読み込み時点からの相対時間で動きます（壁時計の :00 等には揃いません）。" : {

@@ -124,25 +124,46 @@ enum CronTranslator {
             return .interval(60)
         }
 
-        // 各フィールドのキーと値集合（nil はワイルドカードなので除外）
-        let pairs: [(key: String, values: [Int])] = [
-            ("Minute",  minute),
-            ("Hour",    hour),
-            ("Day",     dom),
-            ("Month",   month),
-            ("Weekday", dow)
-        ].compactMap { key, set in
+        // cron の特殊規則: 日(dom)と曜日(dow)が両方とも指定された場合は OR（どちらかが一致で実行）。
+        // launchd では Day と Weekday を同じ辞書に入れると AND になってしまうため、
+        // 「Day 系（Weekday なし）」と「Weekday 系（Day なし）」を別々に展開して和集合をとる。
+        if dom != nil && dow != nil {
+            let dayEntries = try product([
+                ("Minute", minute), ("Hour", hour), ("Day", dom), ("Month", month)
+            ], maxEntries: maxEntries)
+            let weekdayEntries = try product([
+                ("Minute", minute), ("Hour", hour), ("Weekday", dow), ("Month", month)
+            ], maxEntries: maxEntries)
+
+            // 重複を除いて和集合をとる
+            var seen = Set<String>()
+            var merged: [[String: Int]] = []
+            for entry in dayEntries + weekdayEntries where seen.insert(entryKey(entry)).inserted {
+                merged.append(entry)
+            }
+            guard merged.count <= maxEntries else {
+                throw CronParseError(message: tooManyMessage(merged.count, maxEntries))
+            }
+            return .calendar(merged)
+        }
+
+        // 通常: ワイルドカードでないフィールドだけで直積を作る
+        let entries = try product([
+            ("Minute", minute), ("Hour", hour), ("Day", dom), ("Month", month), ("Weekday", dow)
+        ], maxEntries: maxEntries)
+        return .calendar(entries)
+    }
+
+    /// ワイルドカード(nil)でないフィールドだけの直積を StartCalendarInterval 配列にする。
+    private static func product(_ fields: [(key: String, values: Set<Int>?)], maxEntries: Int) throws -> [[String: Int]] {
+        let pairs: [(key: String, values: [Int])] = fields.compactMap { key, set in
             guard let set = set else { return nil }
             return (key, set.sorted())
         }
-
-        // 直積のサイズを確認
         let total = pairs.reduce(1) { $0 * $1.values.count }
         guard total <= maxEntries else {
-            throw CronParseError(message: String(localized: "cron.err.tooMany", defaultValue: "この cron 式は \(total) 個の実行時刻に展開され、多すぎます（上限 \(maxEntries)）。間隔(launchd)モードか、もっと絞った式をお使いください。"))
+            throw CronParseError(message: tooManyMessage(total, maxEntries))
         }
-
-        // ワイルドカードでないフィールドだけで直積を作る
         var entries: [[String: Int]] = [[:]]
         for (key, values) in pairs {
             var next: [[String: Int]] = []
@@ -155,8 +176,18 @@ enum CronTranslator {
             }
             entries = next
         }
+        return entries
+    }
 
-        return .calendar(entries)
+    /// 辞書を一意なキー文字列にする（和集合の重複除去用）。
+    private static func entryKey(_ entry: [String: Int]) -> String {
+        entry.sorted { $0.key < $1.key }
+            .map { "\($0.key)=\($0.value)" }
+            .joined(separator: ",")
+    }
+
+    private static func tooManyMessage(_ total: Int, _ maxEntries: Int) -> String {
+        String(localized: "cron.err.tooMany", defaultValue: "この cron 式は \(total) 個の実行時刻に展開され、多すぎます（上限 \(maxEntries)）。間隔(launchd)モードか、もっと絞った式をお使いください。")
     }
 
     /// launchd「かんたん」モードのカレンダー設定を StartCalendarInterval の配列へ。

@@ -26,6 +26,14 @@ struct CommandResult: Sendable {
 
 enum ShellRunner {
 
+    /// stdout / stderr を別スレッドで読み切るための受け皿。
+    /// DispatchGroup の enter/leave/wait がメモリバリアになるため、
+    /// wait 後に読む限りデータ競合は起きない（@unchecked Sendable で明示）。
+    private final class OutputBox: @unchecked Sendable {
+        var out = Data()
+        var err = Data()
+    }
+
     /// コマンドを実行し、終了するまで待って出力をまとめて返す。
     nonisolated static func runCapture(
         executable: String,
@@ -56,14 +64,30 @@ enum ShellRunner {
                 return
             }
 
-            let outData = outPipe.fileHandleForReading.readDataToEndOfFile()
-            let errData = errPipe.fileHandleForReading.readDataToEndOfFile()
+            // stdout と stderr を別スレッドで同時に読み切る。
+            // 直列に読むと、片方のパイプバッファ（既定 64KB）が埋まった時点で
+            // 子プロセスの write がブロックし、もう片方の EOF も来なくなって
+            // デッドロックする。並行に読むことでこれを防ぐ。
+            let box = OutputBox()
+            let group = DispatchGroup()
+            group.enter()
+            DispatchQueue.global().async {
+                box.out = outPipe.fileHandleForReading.readDataToEndOfFile()
+                group.leave()
+            }
+            group.enter()
+            DispatchQueue.global().async {
+                box.err = errPipe.fileHandleForReading.readDataToEndOfFile()
+                group.leave()
+            }
+
             process.waitUntilExit()
+            group.wait()
 
             continuation.resume(returning: CommandResult(
                 status: process.terminationStatus,
-                stdout: String(data: outData, encoding: .utf8) ?? "",
-                stderr: String(data: errData, encoding: .utf8) ?? ""
+                stdout: String(data: box.out, encoding: .utf8) ?? "",
+                stderr: String(data: box.err, encoding: .utf8) ?? ""
             ))
         }
     }

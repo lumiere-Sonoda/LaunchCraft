@@ -56,7 +56,9 @@ enum NextRunCalculator {
             if let mo = entry["Month"]   { comps.month   = mo }
             // launchd Weekday: 0=日、Calendar.weekday: 1=日 → +1
             if let wd = entry["Weekday"] { comps.weekday = wd + 1 }
-            return cal.nextDate(after: now, matching: comps, matchingPolicy: .nextTime)
+            // .strict: 存在しない日（例: 31日が無い月）には丸めず次の厳密一致へ進む。
+            // launchd 自身もそうした月はスキップするため、挙動を一致させる。
+            return cal.nextDate(after: now, matching: comps, matchingPolicy: .strict)
         }.min()
     }
 

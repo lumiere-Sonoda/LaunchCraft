@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Key Facts
 
-- **Language**: Swift 5.0 (SwiftUI)
+- **Language**: Swift 6.0 (SwiftUI、Swift 6 言語モード。既定 MainActor 分離 + Approachable Concurrency。モデル/サービス層は `nonisolated`)
 - **Minimum OS**: macOS 26.5
 - **Build System**: Xcode (single scheme: `AutoShell-execer`, configs: Debug/Release)
 - **App Sandbox**: Disabled (required to control launchd)
